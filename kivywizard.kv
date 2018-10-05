@@ -1,0 +1,113 @@
+<ScreenManagement>:
+    Login:
+    PaginaInicial:
+    LabelConfig:
+    Missoes:
+	
+ 
+<PaginaInicial>:    
+    name: 'paginaInicial'
+    usuTxt: info
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Sports GO! - Pagina Inicial'           
+        Label:
+            id: info
+            text: 'Nome, @nick --- pontos: 0'
+        Button:
+            on_release: app.root.switch_to_labelConfig()
+            text: 'Ir para Quiz'
+        Button:
+            on_release: app.root.switch_to_missoes()
+            text: 'Ir para Missões'
+    
+<LabelConfig>:
+    name: 'labelConfig'
+	
+<Login>:
+    name: 'login'
+    usuTxt: usuario
+    senhTxt: senha
+	
+	canvas.before:
+        Color:
+            rgb:0.259,0.553,0.8
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    
+    BoxLayout:
+        orientation: 'vertical'
+        Label: 
+            text: 'Digite seu usuario'
+            font_size: 30
+            size_hint: 0.4,0.4
+            pos_hint: {'x': 0.25}
+        TextInput:
+            id: usuario
+            size_hint: 0.5,0.4
+            pos_hint: {'x': 0.25}
+        Label:
+            text: 'Digite sua senha'
+            font_size: 30
+            size_hint: 0.4,0.4
+            pos_hint: {'x': 0.25}
+        TextInput:
+            id: senha
+            password: True
+            size_hint: 0.5,0.4
+            pos_hint: {'x': 0.25}
+        Label:
+            text: ''
+            size_hint: 0.4,0.4
+        Button:
+            on_press: root.recebe(), app.root.switch_to_paginaInicial()
+            text: 'Entrar'
+            font_size: 30
+            size_hint: 0.5,0.4
+            pos_hint: {'x': 0.25}
+        Label:
+            text: ''
+            size_hint: 0.4,0.4
+<Missoes>:
+    name: 'missoes'
+    legenda_text_input:legenda
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgb:0.259,0.553,0.8
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        Label:
+            id:missao
+            text:'MISSAO: Tire uma foto dando um chute no ar!'
+            font_size:30
+        Label:
+            id:label
+            text:'Digite uma legenda para sua foto:'
+            font_size:25
+        TextInput:
+            id:legenda
+            size_hint:[.4,.3]
+            pos_hint:{'x':.3}
+        Label:
+            id:label_vazia
+            text:' '
+        Button:
+            id:b_upload
+            text:'Tirar foto'
+            size_hint: [.4,.4]
+            pos_hint: {'x':.3}
+            on_press:root.recebe()
+            #background_color: .749, .961, 1, 1
+        Label:
+            id:label_vazia2
+            text:' '
+        Button:
+            on_release: app.root.switch_to_paginaInicial()
+            text:'Voltar'
+            size_hint: [.4,.4]
+            pos_hint: {'x':.3}
