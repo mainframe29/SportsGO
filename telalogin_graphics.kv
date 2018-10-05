@@ -1,0 +1,48 @@
+<Tela>:
+    orientation:'vertical'
+    boxUser:box_User
+    boxSen:box_Sen
+
+    canvas.before:
+        Color:
+            rgb:0.259,0.553,0.8
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    Label:
+        id:label_usu
+        text:'Digite seu usuario:'
+        font_size:30
+        size_hint:[.4,.4]
+        pos_hint:{'x' : .25}
+    TextInput:
+        id: box_User
+        size_hint:[.5,.4]
+        pos_hint:{'x':.25}
+    Label:
+        id:label_sen
+        text:'Digite a sua senha:'
+        font_size:30
+        size_hint:[.4,.4]
+        pos_hint:{'x' : .25}
+    TextInput:
+        id:box_Sen
+        password: True
+        size_hint:[.5,.4]
+        pos_hint:{'x' : .25}
+    Label:
+        id:label_vazia
+        text:' '
+        size_hint:[.4,.4]
+    Button:
+        id:botao
+        text: 'Entrar'
+        font_size:30
+        size_hint:[.5,.4]
+        pos_hint:{'x' : 0.25}
+        on_press:root.recebe()
+    Label:
+        id:label_vazia2
+        text:' '
+        size_hint:[.4,.4]
+        
