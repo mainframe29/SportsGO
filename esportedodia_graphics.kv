@@ -1,0 +1,20 @@
+<Tela>:
+    orientation:'vertical'
+    canvas.before:
+        Color:
+            rgb:0.259,0.553,0.8
+        Rectangle:
+            pos:self.pos
+            size:self.size
+    Label:
+        id:nome
+        text:root.get_name()
+        size_hint:[.2,.1]
+        pos_hint:{'x':.4}
+        font_size:50
+    Label:
+        id:historia
+        text:root.hist_plus_rules()
+        size_hint:[.5,.5]
+        pos_hint:{'x':.25,'y':.7}
+        text_size: (930,None)
