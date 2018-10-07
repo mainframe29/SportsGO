@@ -1,9 +1,10 @@
 <ScreenManagement>:
-    Login:
+	TelaCadastro:
+	Login:
     PaginaInicial:
     LabelConfig:
     Missoes:
-	
+	Tela:
  
 <PaginaInicial>:    
     name: 'paginaInicial'
@@ -26,7 +27,7 @@
             text: 'Nome, @nick --- pontos: 0'
             color:[0,0,0,1]
         Button:
-            on_release: app.root.switch_to_labelConfig()
+            on_release: app.root.switch_to_labelConfig(), root.validar()
             text: 'Ir para Quiz'
             size_hint: 0.4,0.4
             pos_hint: {'x': 0.3}
@@ -35,9 +36,79 @@
             text: 'Ir para Missoes'
             size_hint: 0.4,0.4
             pos_hint: {'x': 0.3}
+		Button:
+            on_release: app.root.switch_to_esporteDia()
+            text: 'Ir para o Esporte do Dia'
+            size_hint: 0.4,0.4
+            pos_hint: {'x': 0.3}
         Label:
             text:' '
-    
+
+<TelaCadastro>:
+	name: 'telaCadastro'
+	name_text_input: nome
+	usuario_text_input: usuario
+	email_text_input: email
+	senha_text_input: senha
+	BoxLayout:
+		orientation: 'vertical'
+		#padding: [1, 0, 0.5, 1]
+		canvas.before:
+			Color:
+				rgb: 0.3, 0.7, 1
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		Label:
+			text: 'Novo cadastro'
+			bold: True
+			font_size: 35
+			#color: [0.9019607843137255, 0.6, 1, 1]
+		Label:
+			size: self.texture_size
+			text: 'Nome:'
+		TextInput:
+			id: nome
+			size_hint: 0.3, 0.8 #width, height
+			pos_hint: {'center_x': .5, 'center_y': .5}
+			multiline: False
+			focus: True
+			
+		Label:
+			size: self.texture_size
+			text: 'Usuario:'
+		TextInput:
+			id: usuario
+			size_hint: 0.3, 0.8
+			pos_hint: {'center_x': .5, 'center_y': .5}
+			multiline: False
+		Label:
+			size: self.texture_size
+			text: 'E-Mail:'
+		TextInput:
+			id: email
+			size_hint: 0.3, 0.8
+			pos_hint: {'center_x': .5, 'center_y': .5}
+			multiline: False
+		Label:
+			size: self.texture_size
+			text: 'Senha:'
+		TextInput:
+			id: senha
+			size_hint: 0.3, 0.8
+			pos_hint: {'center_x': .5, 'center_y': .5}
+			multiline: False
+			password: True
+		Label:
+		Button:
+			text: 'Cadastrar'
+			size_hint: 0.3, 0.8
+			pos_hint: {'center_x': .5, 'center_y': .5}
+			font_size: 30
+			background_color: [0.9019607843137255, 0.6, 1, 1]
+			#color: [0.9019607843137255, 0.6, 1, 1]
+			on_press: root.insert_user()
+
 <LabelConfig>:
     name: 'labelConfig'
     canvas.before:
@@ -143,3 +214,37 @@
         Label:
             id:label_vazia5
             text:' '
+<Tela>:
+	name: 'esporteDia'
+	BoxLayout:
+		orientation:'vertical'
+		canvas.before:
+			Rectangle:
+				pos:self.pos
+				size:self.size
+				source:'fundoFeed.jpg'
+		Label:
+			id:nome
+			text:root.get_name()
+			size_hint:[.2,.1]
+			pos_hint:{'x':.4}
+			font_size:50
+			color:[0,0,0,1]
+		Label:
+			id:historia
+			text:root.hist_plus_rules()
+			size_hint:[.5,.5]
+			pos_hint:{'x':.25,'y':.7}
+			text_size: (930,None)
+			color:[0,0,0,1]
+		Button: 
+			text: 'Voltar'
+            on_release: app.root.switch_to_paginaInicial()
+            size_hint: 0.1,0.08
+            pos_hint: {'x': 0.03}
+		Button: 
+			text: 'Iniciar Quiz'
+            on_release: app.root.switch_to_labelConfig()
+            size_hint: 0.09,0.09
+			pos_hint: {'x': .45}
+		

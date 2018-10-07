@@ -20,7 +20,7 @@ kivy.require('1.8.0')
 __version__ = "0.1"
 
 Pergunta = 0
-Id_Session = 1
+Id_Session = 0
 class DbCon:
     def __init__(self):
         self.db = pymysql.connect(host='localhost',
@@ -38,8 +38,45 @@ class DbCon:
         self.c.execute(sql, Pergunta)
         return self.c.fetchall()
 
- 
+class TelaCadastro(Screen):
+    def insert_user(self):
+        self.db = DbCon()
+        ''' no arquivo kv, eu coloquei o comando name_text_input : nome,
+        ele apenas atribui o id do text input (nome) a essa variavel(name_text_input)
+        '''
+        self.nome = self.name_text_input.text
+        self.user = self.usuario_text_input.text
+        self.email = self.email_text_input.text
+        self.senha = self.senha_text_input.text
+
+        self.db.c.execute("select count(*)from usuario where nick like '"+self.user+"'")
+        self.userExist = self.db.c.fetchone()#uso o um select count para contar quantos usuarios existem para o digitado
+        self.db.c.execute("select count(*)from usuario where email like '"+self.email+"'")
+        self.emailExist = self.db.c.fetchone()#uso o um select count para contar quantos email existem para o digitado
+
+        if(self.userExist['count(*)'] == 0 and self.emailExist['count(*)'] == 0): #só da o insert se o o count dos dois for 0
+            sql = "INSERT INTO usuario VALUES(0,'"+self.nome+"', '"+self.user+"', '"+self.email+"', '"+self.senha+"', 1, 0)"
+            self.db.c.execute(sql)
+            self.parent.current = 'login'
+        else:
+            print('usuario ou email invalido!')
+    pass
+
 class PaginaInicial(Screen):
+    def validar(self):
+        global Pergunta
+        if(Pergunta!=0):
+            layout      = GridLayout(cols=1, padding=10)
+            popupLabel  = Label(text  = "Você ja completou o quiz diario, volte amanhã")
+            closeButton = Button(text = "Ok")
+            layout.add_widget(popupLabel)
+            layout.add_widget(closeButton)   
+            popup = Popup(title='Alerta!',
+                              content=layout)
+                #content=(Label(text='This is a demo pop-up')))
+            popup.open()
+            closeButton.bind(on_press=popup.dismiss)
+            self.parent.current = 'paginaInicial'
     pass
 
 class Login(Screen):        
@@ -90,33 +127,35 @@ class Login(Screen):
 class LabelConfig(Screen):
     def __init__(self,**kwargs):
         super(Screen,self).__init__(**kwargs)
-        global Id_Session
-        self.orientation = "horizontal"
+        global Id_Session, Pergunta
+        if(Pergunta==0):
+            self.orientation = "horizontal"
 
-        self.questao_field = BoxLayout(orientation="horizontal")
-        #self.table = GridLayout(cols=5,rows=2)
-        self.db = DbCon()
-        self.table = BoxLayout(orientation = "vertical")
-        
-        
-        self.rows = [[Label(text ='pergunta'),Button(text="Alternativa A"),
-                      Button(text="Alternativa B"), Button(text="Alternativa C"),
-                      Button(text="Alternativa D"),]]
-        
+            self.questao_field = BoxLayout(orientation="horizontal")
+            #self.table = GridLayout(cols=5,rows=2)
+            self.db = DbCon()
+            self.table = BoxLayout(orientation = "vertical")
+            
+            
+            self.rows = [[Label(text ='pergunta', color = [0,0,0,1], text_size= (self.center_x*5,None)),Button(text="Alternativa A"),
+                          Button(text="Alternativa B"), Button(text="Alternativa C"),
+                          Button(text="Alternativa D"),]]
+            
 
-        for pergunta, alternativaA, alternativaB, alternativaC, alternativaD in self.rows:
-            self.table.add_widget(pergunta)
-            self.table.add_widget(alternativaA)
-            self.table.add_widget(alternativaB)
-            self.table.add_widget(alternativaC)
-            self.table.add_widget(alternativaD)
+            for pergunta, alternativaA, alternativaB, alternativaC, alternativaD in self.rows:
+                self.table.add_widget(pergunta)
+                self.table.add_widget(alternativaA)
+                self.table.add_widget(alternativaB)
+                self.table.add_widget(alternativaC)
+                self.table.add_widget(alternativaD)
 
-        self.add_widget(self.table)
+            self.add_widget(self.table)
 
 
-        self.db = DbCon()
-        self.update_table()
-
+            self.db = DbCon()
+            self.update_table()
+    
+            
     def update_table(self):
         db = DbCon()
         self.db.c.execute("select count(*) from quiz where esporte = 1")
@@ -134,6 +173,17 @@ class LabelConfig(Screen):
                     self.rows[index][4].bind(on_press=self.change_question)
             else:
                 self.clear_table()
+                layout      = GridLayout(cols=1, padding=10)
+                popupLabel  = Label(text  = "O Quiz chegou ao fim, aguarde até amanhã para poder fazer novamente :)")
+                closeButton = Button(text = "Finalizar")
+                layout.add_widget(popupLabel)
+                layout.add_widget(closeButton)   
+                popup = Popup(title='Alerta!',
+                              content=layout)
+                #content=(Label(text='This is a demo pop-up')))
+                popup.open()
+                closeButton.bind(on_press=popup.dismiss)
+                self.parent.current = 'paginaInicial'
 
     def clear_table(self):
         for index in range(1):
@@ -235,6 +285,34 @@ class Missoes(Screen):
         return
     pass
 
+
+class Tela(Screen):
+    def hist_plus_rules(self):
+        hist=str(self.get_history())+'\n'+str(self.get_rules())
+        return hist
+        
+    def get_history(self):
+        self.db = DbCon()
+
+        texto=self.db.c.execute("select historia from esportes")
+        texto = self.db.c.fetchone()
+
+        return str(texto['historia'])
+
+    def get_name(self):
+        self.db = DbCon()
+        texto = self.db.c.execute("select nome from esportes")
+        texto = self.db.c.fetchone()
+
+        return str(texto['nome'])
+    def get_rules(self):
+        self.db = DbCon()
+        texto = self.db.c.execute("select regras from esportes")
+        texto = self.db.c.fetchone()
+
+        return str(texto['regras'])
+    pass
+
 class ScreenManagement(ScreenManager):
     def switch_to_labelConfig(self):
         self.current = 'labelConfig'
@@ -247,6 +325,9 @@ class ScreenManagement(ScreenManager):
 
     def switch_to_missoes(self):
         self.current = 'missoes'
+        
+    def switch_to_esporteDia(self):
+        self.current = 'esporteDia'
 
 class kivyWizardApp(App):
     def build(self):
