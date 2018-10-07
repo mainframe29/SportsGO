@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
- 
 import kivy
 from kivy.app import App
 from kivy.app import Widget
