@@ -53,6 +53,8 @@ class Login(Screen):
         pop = Popup(title='Login',content=b)
         pop.open()
         voltar.bind(on_press = pop.dismiss)
+        self.parent.current = 'paginaInicial' #chama tela q esta no .kv
+
     def login_errado(self):
         b = BoxLayout(orientation='vertical')
         
@@ -245,7 +247,7 @@ class ScreenManagement(ScreenManager):
 
     def switch_to_missoes(self):
         self.current = 'missoes'
- 
+
 class kivyWizardApp(App):
     def build(self):
         self.root = ScreenManagement()
