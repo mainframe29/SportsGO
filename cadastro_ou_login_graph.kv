@@ -1,0 +1,39 @@
+<Cadastro_ou_login>:
+    orientation: 'vertical'
+    padding: [0,0,0,30]
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:'fundoFeed.jpg'
+    Image:
+        id:logo
+        source:'logo.png'
+    Button:
+        id:b_cadastro
+        text:'Criar conta'
+        italic:True
+        background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+        background_normal: ''
+        size_hint:[.3,.2]
+        pos_hint:{'x':0.35}
+        font_size:30
+        #on_press: app.root.switch_to_Cadastra()
+    Label:
+        text:' '
+        size_hint:[.3,.01]
+        pos_hint:{'x':0.35}
+    Button:
+        id:b_login
+        text:'Login'
+        italic:True
+        background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+        background_normal: ''
+        size_hint:[.3,.2]
+        pos_hint:{'x':0.35}
+        font_size:30
+        #on_press: app.root.switch_to_Login()
+    #Label:
+        #text:' '
+        #size_hint:[.3,.2]
+        #pos_hint:{'x':0.35}
