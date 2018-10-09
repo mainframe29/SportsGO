@@ -3,99 +3,137 @@
 			
 <Perfil>:
     lblTxt: lblUser
-	orientation: 'horizontal'
+	cols: 1
+    rows: 2
+    spacing: [0, 60] #spacing between children: [horizontal, vertical].
 	canvas.before:
 		Rectangle:
 			pos: self.pos
 			size: self.size
 			source:'fundoFeed.jpg'
 
-    Label:
-	#1
-	#BoxLayout:
-		#orientation: 'horizontal'
-		#Label:
-		#Label:
-			#id: lblUser
-			#text: ''
-			#font_size: 35
-		#Label:
-			#canvas:
-				#Color: 
-					#rgb:(0, 0, 0)
-				#Ellipse:
-					#pos: self.center_x*0.99, self.center_y*0.87
-					#size: 90, 90
-
-	#2 - local onde fica o post
-	BoxLayout:
-        #lblTxt: lblUser.text
-		orientation: 'vertical'
-        BoxLayout:
-            orientation: 'vertical'
-            Label:
-                id: lblUser
-                text: root.puxaUsuario()
-                color: 0, 0, 0, 1
-                font_size: 25
-                bold: True
-                pos_hint: {'center_y': 0.5}
-            Label:
-            Label:
-            Label:
-        BoxLayout:
-            orientation: 'vertical'
-            Label: #~~~~post~~~~#
-                id: lblPost
-                #Label:
-                    #id: titPost
-                    #text: ''
-                    #font_size: 25
-                canvas:
-                    Rectangle:
-                        id: imgPost
-                        pos: self.pos
-                        size: self.size
-                        source: 'bp.jpg'
-            Label:
-                id: legendaPost
-                text: 'legendaaaaAAaaAAAAAaa'
-                color: 0, 0, 0, 1
-                font_size: 15
-            Label:
-                id: tagPost
-                text: '#tagtagtagtag'
-                color: 0, 0, 0, 1
-                font_size: 10
-
-	#3
-	BoxLayout:
-		orientation: 'vertical'
-		Label:
-        Label: #~~~~icon~~~~#
-            canvas:
-				Color: 
-					rgb: 1, 1, 1, 1
-				Ellipse:
-					pos: self.center_x, self.center_y*0.9
-					size: 100, 100
-                    source: 'jeonghan.jpg'
-        Label:
-        Label:
-        Label:
-        Label:
-        Label:
-        Label:
-        Label:
-        Label:
-        Label:
-        Label:
-		Button:
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: 0.2
+        Button:
 			size: self.size
 			text: 'Sair'
-			size_hint: 0.5, 1
-			pos_hint: {'center_y': 0.2, 'right': 0.85}
-			font_size: 30
-			background_color: [0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1]
+            font_size: 25
+			size_hint: 0.5, 0.6
+			pos_hint: {'center_y': 0.6}
+			italic: True
+            background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+            background_normal: ''
         Label:
-		
+            id: lblUser
+            text: '@'+root.puxaUsuario()
+            font_size: 25
+            size_hint: 1, 0.6
+            pos_hint: {'center_y': 0.6}
+            color: 0, 0, 0, 1
+            bold: True
+        Label: #~~~~icon~~~~#
+            size_hint: 0.5, 0.6
+            canvas:
+			    Color: 
+					rgb: 1, 1, 1, 1
+				Ellipse:
+					pos: self.center_x*0.95, self.center_y*0.9
+					size: 100, 100
+                    source: 'jeonghan.jpg'
+            
+
+	GridLayout:
+        cols: 3
+        rows: 2
+        padding: [30, 0, 30, 30] #padding between the layout box and it’s children: [left, top, right, bottom]
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                size: self.size
+                source: 'nenes.jpg'
+                allow_stretch: True
+            Label:
+                text: 'teste'
+                shorten: True
+                font_size: 15
+                size_hint_y: 0.3
+                size_hint_x: 1
+                text_size: None, None
+                split_str: ' '
+                color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                size: self.size
+                source: 'bp.jpg'
+                allow_stretch: True
+            Label:
+                text: 'teste'
+                shorten: True
+                font_size: 15
+                size_hint_y: 0.3
+                size_hint_x: 1
+                text_size: None, None
+                split_str: ' '
+                color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                size: self.size
+                source: 'idleibnida.jpg'
+                allow_stretch: True
+            Label:
+                text: 'teste'
+                shorten: True
+                font_size: 15
+                size_hint_y: 0.3
+                size_hint_x: 1
+                text_size: None, None
+                split_str: ' '
+                color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                size: self.size
+                source: 'minghao2.png'
+                allow_stretch: True
+            Label:
+                text: 'teste'
+                shorten: True
+                font_size: 15
+                size_hint_y: 0.3
+                size_hint_x: 1
+                text_size: None, None
+                split_str: ' '
+                color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                size: self.size
+                source: 'iti.jpg'
+                allow_stretch: True
+            Label:
+                text: 'teste'
+                shorten: True
+                font_size: 15
+                size_hint_y: 0.3
+                size_hint_x: 1
+                text_size: None, None
+                split_str: ' '
+                color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'vertical'
+            Image:
+                size: self.size
+                source: 'icones.jpg'
+                allow_stretch: True
+            Label:
+                text: 'teste'
+                shorten: True
+                font_size: 15
+                size_hint_y: 0.3
+                size_hint_x: 1
+                text_size: None, None
+                split_str: ' '
+                color: 0, 0, 0, 1

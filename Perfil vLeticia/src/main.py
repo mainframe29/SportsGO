@@ -10,7 +10,7 @@ import pymysql
 
 id_session = 2
 
-class Perfil(BoxLayout):
+class Perfil(GridLayout):
     global id_session
 
     qtd = 0
