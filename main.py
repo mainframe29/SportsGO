@@ -6,7 +6,7 @@ import time
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 import pymysql
-
+from kivy.uix.image import Image
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -20,7 +20,7 @@ kivy.require('1.8.0')
 __version__ = "0.1"
 
 Pergunta = 0
-Id_Session = 0
+Id_Session = 1
 class DbCon:
     def __init__(self):
         self.db = pymysql.connect(host='localhost',
@@ -37,6 +37,43 @@ class DbCon:
         sql = "SELECT * FROM quiz WHERE esporte = 1 limit %s,1"
         self.c.execute(sql, Pergunta)
         return self.c.fetchall()
+
+class Cadastro_ou_login(Screen):
+    pass
+
+class Perfil(Screen):
+    global Id_Session
+    def puxaUsuario(self):
+
+        self.db = DbCon()
+        nick = self.db.c.execute("SELECT nick FROM usuario WHERE id_usu = " + str(Id_Session)) #pega o nick
+        n = self.db.c.fetchone() #coloca o comando num vetor
+        self.lblTxt.text = n['nick']
+
+        #self.puxaQtdPosts #chama puxaQtdPosts
+        return self.lblTxt.text
+
+
+    def __init__(self,**kwargs):
+        super(Screen,self).__init__(**kwargs)
+        global Id_Session
+        self.tblImg = GridLayout(cols = 3, padding = [30, 0, 30, 30])
+        if(Id_Session!= 0):
+            self.db = DbCon()
+            self.db.c.execute("select url, legenda from videos where id_usu = "+str(Id_Session))
+           
+            for row in self.db.c:
+                self.linhas = BoxLayout(orientation = 'vertical')
+                print('url: '+str(row))
+                self.img = Image(source = row['url'], size = self.size, allow_stretch= True)
+                self.linhas.add_widget(self.img)
+                self.legenda = Label(text = row['legenda'], shorten= True, font_size = 15, size_hint_y= .3, size_hint_x= 1, text_size= [None, None], split_str= ' ', color= [0, 0, 0, 1])
+                self.linhas.add_widget(self.legenda)
+                self.tblImg.add_widget(self.linhas)
+            self.add_widget(self.tblImg)   
+        print('Passou aqui! '+str(Id_Session))
+        
+    pass
 
 class TelaCadastro(Screen):
     def insert_user(self):
@@ -62,23 +99,6 @@ class TelaCadastro(Screen):
             print('usuario ou email invalido!')
     pass
 
-class PaginaInicial(Screen):
-    def validar(self):
-        global Pergunta
-        if(Pergunta!=0):
-            layout      = GridLayout(cols=1, padding=10)
-            popupLabel  = Label(text  = "Você ja completou o quiz diario, volte amanhã")
-            closeButton = Button(text = "Ok")
-            layout.add_widget(popupLabel)
-            layout.add_widget(closeButton)   
-            popup = Popup(title='Alerta!',
-                              content=layout)
-                #content=(Label(text='This is a demo pop-up')))
-            popup.open()
-            closeButton.bind(on_press=popup.dismiss)
-            self.parent.current = 'paginaInicial'
-    pass
-
 class Login(Screen):        
     def confirma_login(self):
         b = BoxLayout(orientation='vertical')
@@ -90,7 +110,9 @@ class Login(Screen):
         pop = Popup(title='Login',content=b)
         pop.open()
         voltar.bind(on_press = pop.dismiss)
+        
         self.parent.current = 'paginaInicial' #chama tela q esta no .kv
+        
 
     def login_errado(self):
         b = BoxLayout(orientation='vertical')
@@ -117,11 +139,37 @@ class Login(Screen):
 
         
         if(test['count(*)'] == 1):
-            self.confirma_login()
             Id_Session = test['id_usu']
-            print(Id_Session)
+            print(str(Id_Session))
+            PaginaInicial().informacao()
+            self.confirma_login()
         else:
             self.login_errado()
+    pass
+
+class PaginaInicial(Screen):
+    def informacao(self):
+        global Id_Session
+        self.db = DbCon()
+        sql = "select nome from usuario where id_usu = %s"
+        texto=self.db.c.execute(sql, Id_Session)
+        texto = self.db.c.fetchone()
+        self.infTxt.text = str(texto['nome'])
+        print(self.infTxt.text)
+    def validar(self):
+        global Pergunta
+        if(Pergunta!=0):
+            layout      = GridLayout(cols=1, padding=10)
+            popupLabel  = Label(text  = "Você ja completou o quiz diario, volte amanhã")
+            closeButton = Button(text = "Ok")
+            layout.add_widget(popupLabel)
+            layout.add_widget(closeButton)   
+            popup = Popup(title='Alerta!',
+                              content=layout)
+                #content=(Label(text='This is a demo pop-up')))
+            popup.open()
+            closeButton.bind(on_press=popup.dismiss)
+            self.parent.current = 'paginaInicial'
     pass
  
 class LabelConfig(Screen):
@@ -314,6 +362,12 @@ class Tela(Screen):
     pass
 
 class ScreenManagement(ScreenManager):
+    def switch_to_Cadastra(self):
+        self.current = 'telaCadastro'
+
+    def switch_to_Perfil(self):
+        self.current = 'perfil'
+        
     def switch_to_labelConfig(self):
         self.current = 'labelConfig'
          

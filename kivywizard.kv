@@ -1,14 +1,101 @@
 <ScreenManagement>:
-	TelaCadastro:
+    Cadastro_ou_login:
+    TelaCadastro:
 	Login:
     PaginaInicial:
     LabelConfig:
     Missoes:
 	Tela:
- 
+    Perfil:
+
+<Cadastro_ou_login>:
+    orientation: 'vertical'
+    padding: [0,0,0,30]
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:'fundoFeed.jpg'
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            id:logo
+            source:'logo.png'
+        Button:
+            id:b_cadastro
+            text:'Criar conta'
+            italic:True
+            background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+            background_normal: ''
+            size_hint:[.3,.2]
+            pos_hint:{'x':0.35}
+            font_size:30
+            on_press: app.root.switch_to_Cadastra()
+        Label:
+            text:' '
+            size_hint:[.3,.01]
+            pos_hint:{'x':0.35}
+        Button:
+            id:b_login
+            text:'Login'
+            italic:True
+            background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+            background_normal: ''
+            size_hint:[.3,.2]
+            pos_hint:{'x':0.35}
+            font_size:30
+            on_press: app.root.switch_to_Login()
+        #Label:
+            #text:' '
+            #size_hint:[.3,.2]
+            #pos_hint:{'x':0.35}
+<Perfil>:
+    name: 'perfil'
+    lblTxt: lblUser
+	cols: 1
+    rows: 2
+    spacing: [0, 60] #spacing between children: [horizontal, vertical].
+	canvas.before:
+		Rectangle:
+			pos: self.pos
+			size: self.size
+			source:'fundoFeed.jpg'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: 0.2
+        Button:
+			size: self.size
+			text: 'Voltar'
+            font_size: 25
+			size_hint: 0.5, 0.6
+			pos_hint: {'center_y': 0.6}
+			italic: True
+            background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+            background_normal: ''
+			on_press: app.root.switch_to_paginaInicial()
+        Label:
+            id: lblUser
+            text: '@'
+            font_size: 25
+            size_hint: 1, 0.6
+            pos_hint: {'center_y': 0.6}
+            color: 0, 0, 0, 1
+            bold: True
+        Label: #~~~~icon~~~~#
+            size_hint: 0.5, 0.6
+            canvas:
+			    Color: 
+					rgb: 1, 1, 1, 1
+				Ellipse:
+					pos: self.center_x*0.95, self.center_y*0.9
+					size: 100, 100
+                    source: 'jeonghan.jpg'
+            
+	
 <PaginaInicial>:    
     name: 'paginaInicial'
-    usuTxt: info
+    infTxt: info
     BoxLayout:
         orientation: 'vertical'
         canvas.before:
@@ -24,8 +111,12 @@
             font_size:30     
         Label:
             id: info
-            text: 'Nome, @nick --- pontos: 0'
             color:[0,0,0,1]
+        Button:
+            on_release: app.root.switch_to_Perfil()
+            text: 'Minha Conta'
+            size_hint: 0.4,0.4
+            pos_hint: {'x': 0.3}
         Button:
             on_release: app.root.switch_to_labelConfig(), root.validar()
             text: 'Ir para Quiz'
