@@ -1,0 +1,20 @@
+<Feed>:
+    bl: postagens
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fundoFeed.jpg'
+
+    canvas:
+        Ellipse:
+            id: icon
+            pos: self.center_x * 1.87, self.center_y * 1.82 
+            size: 50,50
+            source: 'jeonghan.jpg'
+    BoxLayout:
+        id: postagens
+        orientation: 'vertical'
+        size_hint_x: 1
+        pos_hint: {'x': 0.25,}
+        
