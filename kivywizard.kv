@@ -261,50 +261,68 @@
     name: 'missoes'
     legenda_text_input:legenda
     BoxLayout:
-        orientation: 'vertical'
-        canvas.before:
-            Rectangle:
-                pos:self.pos
-                size:self.size
-                source:'fundoFeed.jpg'
-        Label:
-            id:label_vazia4
-            text:' '
-        Label:
-            id:missao
-            text:'MISSAO: Tire uma foto dando um chute no ar!'
-            font_size:30
-            color:[0,0,0,1]
-        Label:
-            id:label
-            text:'Digite uma legenda para sua foto:'
-            font_size:25
-            color:[0,0,0,1]
-        TextInput:
-            id:legenda
-            size_hint:[.4,.6]
-            pos_hint:{'x':.3}
-        Label:
-            id:label_vazia
-            text:' '
-        Button:
-            id:b_upload
-            text:'Tirar foto'
-            size_hint: [.4,.6]
-            pos_hint: {'x':.3}
-            on_press:root.recebe()
-            #background_color: .749, .961, 1, 1
-        Label:
-            id:label_vazia2
-            text:' '
-        Button:
-            on_release: app.root.switch_to_paginaInicial()
-            text:'Voltar'
-            size_hint: [.4,.6]
-            pos_hint: {'x':.3}
-        Label:
-            id:label_vazia5
-            text:' '
+        orientation:'vertical'
+        ActionBar:
+            background_image: 'white_background.png'
+            background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+            ActionView:
+                ActionPrevious:
+                    title: 'Perfil'
+                    on_release: app.root.switch_to_paginaInicial() #vai para a pag inicial por enquanto
+                ActionButton:
+                    text:'Esporte do dia'
+                    on_release: app.root.switch_to_esporteDia() #vai para a pag esporte do dia
+                ActionButton:
+                    text:'Missoes'
+                    on_release: app.root.switch_to_missoes() #vai para a pag de missoes
+                ActionButton:
+                    text:'Quiz'
+                    on_release: app.root.switch_to_labelConfig() #vai para a pag do quiz
+                ActionButton:
+                    text:'Esportes'
+                ActionButton:
+                    text:'Parcerias'
+        BoxLayout:
+            orientation: 'vertical'
+            canvas.before:
+			    Color:
+				    rgb: 1, 1, 1
+			    Rectangle:
+				    pos: self.pos
+                    size: self.size
+            Label:
+                id:label_vazia4
+                text:' '
+            Label:
+                id:missao
+                text:'MISSAO: Tire uma foto dando um chute no ar!'
+                font_size:30
+                color:[0,0,0,1]
+            Label:
+                id:label
+                text:'Digite uma legenda para sua foto:'
+                font_size:25
+                color:[0,0,0,1]
+            TextInput:
+                id:legenda
+                size_hint:[.4,.6]
+                pos_hint:{'x':.3}
+            Label:
+                id:label_vazia
+                text:' '
+            Button:
+                id:b_upload
+                text:'Tirar foto'
+                size_hint: [.4,.6]
+                pos_hint: {'x':.3}
+                on_press:root.recebe()
+                #background_color: .749, .961, 1, 1
+            Label:
+                id:label_vazia2
+                text:' '
+            Label:
+                id:label_vazia5
+                text:' '
 <Tela>:
 	name: 'esporteDia'
 	BoxLayout:
@@ -337,5 +355,4 @@
 			text: 'Iniciar Quiz'
             on_release: app.root.switch_to_labelConfig()
             size_hint: 0.09,0.09
-			pos_hint: {'x': .45}
-		
+            pos_hint: {'x': .45}

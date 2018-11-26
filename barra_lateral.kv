@@ -1,0 +1,23 @@
+<Tarefas>:
+    BoxLayout:
+        orientation:'vertical'    
+        ActionBar:
+            background_image: 'white_background.png'
+            background_color: 0.29411764705882352941176470588235, 0.63137254901960784313725490196078, 0.91764705882352941176470588235294, 1
+            ActionView:
+                ActionPrevious:
+                    title: 'Perfil'
+                    on_release: app.root.current = 'Perfil' #vai para o perfil
+                ActionButton:
+                    text:'Esporte do dia'
+                ActionButton:
+                    text:'Missoes'
+                ActionButton:
+                    text:'Quiz'
+                ActionButton:
+                    text:'Esportes'
+                ActionButton:
+                    text:'Parcerias'
+        BoxLayout:
+            orientation:'vertical'
+
